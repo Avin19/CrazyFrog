@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 4182989543
+    locked: 0
+  - name: Board
+    uniqueID: 3324004183
+    locked: 0
+  - name: Effects
+    uniqueID: 372636099
+    locked: 0
+  - name: UI
+    uniqueID: 1904311523
+    locked: 0

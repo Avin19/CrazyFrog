@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelDefinition[] levels;
     [SerializeField] private BoardManager boardManager;
     [SerializeField] private UIController uiController;
+    private int activeProjectiles = 0;
+    private bool waitingForChainReaction = false;
+
 
     public int CurrentLevelIndex { get; private set; } = 0;
     public int RemainingTaps { get; private set; }
@@ -25,6 +28,22 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+    public void RegisterProjectile()
+    {
+        activeProjectiles++;
+        waitingForChainReaction = true;
+    }
+
+    public void UnregisterProjectile()
+    {
+        activeProjectiles--;
+        if (activeProjectiles <= 0)
+        {
+            activeProjectiles = 0;
+            CheckChainReactionFinished();
+        }
+    }
+
 
     private void Start()
     {
@@ -86,4 +105,29 @@ public class GameManager : MonoBehaviour
         boardManager.ClearBoard();
         LoadLevel(next);
     }
+    private void CheckChainReactionFinished()
+    {
+        if (!waitingForChainReaction) return;
+
+        // Wait is over
+        waitingForChainReaction = false;
+
+        // If no poppers left -> WIN
+        if (boardManager.AllPoppersCleared())
+        {
+            OnBoardCleared();
+            return;
+        }
+
+        // If player has 0 taps and board not cleared -> LOSE
+        if (RemainingTaps == 0)
+            waitingForChainReaction = true;
+
+    }
+    public void StartChainReaction()
+    {
+        waitingForChainReaction = true;
+    }
+
+
 }

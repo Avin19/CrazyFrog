@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class Popper : MonoBehaviour
+public class Poppers : MonoBehaviour
 {
     [SerializeField] private PopperView view;
     [SerializeField] private Projectile projectilePrefab;
@@ -28,6 +28,7 @@ public class Popper : MonoBehaviour
 
     private void OnMouseDown()
     {
+        Debug.Log("Popper clicked: " + name);
         if (!GameManager.Instance.TryUseTap()) return;
         Hit();
         AudioManager.Instance.PlayPop();
@@ -63,7 +64,10 @@ public class Popper : MonoBehaviour
         });
 
         board.NotifyPopperExploded(this);
-        board.SpawnExplosionProjectiles(gridX, gridY, transform, projectilePrefab);
+        GameManager.Instance.StartChainReaction();
+
+        board.SpawnExplosionProjectiles(gridX, gridY, transform);
+
     }
 
     private void CheckForLoseCondition()
