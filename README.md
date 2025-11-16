@@ -1,32 +1,47 @@
-# Unity Project Setup
+# 🎮 Crazy Poppers  
+*A Chain Reaction Puzzle Game Built in Unity*
 
-## Description
-This project is a Unity3D-based game setup tool designed to streamline development by automating the creation of folders, downloading essential scripts, and managing Unity packages.
+---
 
-## Features
-- Auto-create project structure (Scripts, Materials, Prefabs, etc.).
-- Download essential Unity C# scripts from a remote repository.
-- Automatically download a `.gitignore` file for Unity projects.
-- Manage Unity package dependencies (add/remove packages).
-- Generate a `README.md` file with basic project information.
+## 📌 Overview  
+**Crazy Poppers** is a chain-reaction based puzzle game inspired by *Crazy Popper* mechanics.  
+Your goal is to clear the board by smartly using a limited number of taps.  
+Each tapped popper triggers state changes or explosions that launch projectiles in four directions, creating satisfying chain reactions.  
 
-## Gameplay
-Provide a brief explanation of the game mechanics.
+---
 
-## PlantUML Diagrams
-### Class Diagram
-![Class Diagram](include.png)
+## 🧩 Gameplay Mechanics  
 
-## Screenshots
-<!-- ![Screenshot 2](screenshots/screenshot2.png) -->
+| Popper Color | Hits Required | Next State | Final Action |
+|--------------|---------------|------------|---------------|
+| 🟪 Purple     | 1             | Explodes   | Launches projectiles |
+| 🔵 Blue       | 2             | Purple     | Eventually explodes |
+| 🟡 Yellow     | 3             | Blue       | Eventually explodes |
 
-## Development
-This project is developed using Unity3D and C#. Contributions are welcome, including bug fixes, feature enhancements, and optimizations.
+**Explosion Rules:**
+- Exploded poppers launch **projectiles** in **4 directions** (Up, Down, Left, Right).
+- Projectiles hit next poppers → apply hit logic.
+- Projectiles stop only when:
+  - They hit a popper, or
+  - Exit the game board.
 
-## Credits
-This game remake is created by Developer Name.
+**Win Condition:**  
+✔ All poppers are successfully removed from the board.
 
-## Feedback
-If you have any feedback, suggestions, or bug reports, please open an issue on GitHub or contact us directly.
+**Lose Condition:**  
+❌ No taps remaining *after chain reaction ends* and poppers still exist.
 
-Prepare for liftoff and enjoy your journey to the International Space Station! 🚀
+---
+
+## 🕹 Controls  
+| Action | Input |
+|--------|--------|
+| Tap popper | Left Mouse Click / Touch |
+| Restart level | Restart button |
+| Next level | Next button (after win) |
+| Open settings | Menu/Settings button |
+
+---
+
+## 📁 Project Structure
+
