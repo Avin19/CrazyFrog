@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class Poppers : MonoBehaviour
 {
     [SerializeField] private PopperView view;
@@ -9,36 +10,29 @@ public class Poppers : MonoBehaviour
     private int gridX, gridY;
     private PopperColor color;
     private int hitsRemaining;
-    private bool isExploded = false;   // ← ADD THIS
-    private Collider2D col;
 
     public void Initialize(BoardManager board, int x, int y, PopperColor color)
     {
         this.board = board;
         this.gridX = x;
         this.gridY = y;
-        this.color = color;
-        hitsRemaining = (int)color;
-
-        if (col == null)
-            col = GetComponent<Collider2D>();
-
-        view.SetColor(color);
-        isExploded = false;
-
-        if (col != null)
-            col.enabled = true;
+        SetColor(color);
     }
 
-    private void Awake()
+    private void SetColor(PopperColor popColor)
     {
-        col = GetComponent<Collider2D>();
+        color = popColor;
+        hitsRemaining = (int)color; // Purple=1, Blue=2, Yellow=3
+        view.SetColor(color);
     }
 
     private void OnMouseDown()
     {
+        Debug.Log("Popper clicked: " + name);
         if (!GameManager.Instance.TryUseTap()) return;
         Hit();
+        AudioManager.Instance.PlayPop();
+        CheckForLoseCondition();
     }
 
     public void HitByProjectile()
@@ -48,11 +42,10 @@ public class Poppers : MonoBehaviour
 
     private void Hit()
     {
-        if (isExploded) return;   // ← ignore extra hits after explosion
-
         hitsRemaining--;
         if (hitsRemaining > 0)
         {
+            // Yellow -> Blue -> Purple
             color = (PopperColor)hitsRemaining;
             view.SetColor(color);
         }
@@ -64,23 +57,26 @@ public class Poppers : MonoBehaviour
 
     private void Explode()
     {
-        if (isExploded) return;   // safe guard
-        isExploded = true;
-
-        // disable collider so projectiles cannot hit this again
-        if (col != null)
-            col.enabled = false;
-
-        // play explosion puff
         view.PlayExplosionPuff(() =>
         {
+            // after puff you can disable sprite
             gameObject.SetActive(false);
         });
 
-        // notify board
         board.NotifyPopperExploded(this);
+        GameManager.Instance.StartChainReaction();
 
-        // spawn projectiles AFTER collider is disabled
         board.SpawnExplosionProjectiles(gridX, gridY, transform);
+
+    }
+
+    private void CheckForLoseCondition()
+    {
+        // user used a tap; if taps reach zero and board not cleared, we *might* lose.
+        if (GameManager.Instance.RemainingTaps == 0)
+        {
+            // delay a bit in real game to allow chain reaction to finish (use coroutine).
+            GameManager.Instance.OnNoMovesLeft();
+        }
     }
 }

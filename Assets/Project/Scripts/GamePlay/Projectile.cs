@@ -24,14 +24,21 @@ public class Projectile : MonoBehaviour
             Release();
         }
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         var popper = other.GetComponent<Poppers>();
         if (popper != null)
         {
-            Debug.Log("Projectile hit: " + other.name);
             popper.HitByProjectile();
-            Destroy(gameObject);   // or Release() if pooling
+            Release();
+            return;
+        }
+
+        // If you have shields:
+        if (other.CompareTag("Shield"))
+        {
+            Release();
         }
     }
 

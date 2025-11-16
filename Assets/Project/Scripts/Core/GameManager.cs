@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIController uiController;
     private int activeProjectiles = 0;
     private bool waitingForChainReaction = false;
-    private bool loseCheckRunning = false;
+
 
     public int CurrentLevelIndex { get; private set; } = 0;
     public int RemainingTaps { get; private set; }
@@ -38,13 +37,12 @@ public class GameManager : MonoBehaviour
     public void UnregisterProjectile()
     {
         activeProjectiles--;
-        if (activeProjectiles < 0)
+        if (activeProjectiles <= 0)
+        {
             activeProjectiles = 0;
-
-        if (activeProjectiles == 0)
-            StartCoroutine(CheckEndOfChain());
+            CheckChainReactionFinished();
+        }
     }
-
 
 
     private void Start()
@@ -73,28 +71,9 @@ public class GameManager : MonoBehaviour
 
         RemainingTaps--;
         uiController.UpdateTapCount(RemainingTaps);
-        if (RemainingTaps == 0 && !loseCheckRunning)
-        {
-            StartCoroutine(CheckLoseAfterDelay());
-        }
-
         return true;
     }
-    private IEnumerator CheckLoseAfterDelay()
-    {
-        loseCheckRunning = true;
 
-        // wait for chain reaction to finish visually
-        yield return new WaitForSeconds(1.0f); // tweak 0.5–1.5f depending on your speed
-
-        // If board is cleared in that time, win will already trigger, so we don't lose
-        if (!boardManager.AllPoppersCleared())
-        {
-            OnNoMovesLeft();
-        }
-
-        loseCheckRunning = false;
-    }
     public void OnBoardCleared()
     {
         if (levelFinished) return;
@@ -106,7 +85,6 @@ public class GameManager : MonoBehaviour
     public void OnNoMovesLeft()
     {
         if (levelFinished) return;
-        if (boardManager.AllPoppersCleared()) return;
         if (RemainingTaps == 0 && !boardManager.AllPoppersCleared())
         {
             levelFinished = true;
@@ -150,27 +128,6 @@ public class GameManager : MonoBehaviour
     {
         waitingForChainReaction = true;
     }
-    private IEnumerator CheckEndOfChain()
-    {
-        // allow final explosion animations to finish
-        yield return new WaitForSeconds(0.25f);
-
-        waitingForChainReaction = false;
-
-        // WIN check
-        if (boardManager.AllPoppersCleared())
-        {
-            OnBoardCleared();
-            yield break;
-        }
-
-        // LOSE check: no taps left & poppers still on board
-        if (RemainingTaps <= 0)
-        {
-            OnNoMovesLeft();
-        }
-    }
-
 
 
 }
