@@ -18,8 +18,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button restartButtonOnWin;
     [SerializeField] private Button restartButtonOnLose;
-    [SerializeField] private Button quitButton;             // optional
+    [SerializeField] private Button quitButton;
+    // optional
 
+    [SerializeField] private Button quitLossButton;
     private void Awake()
     {
         // Make sure panels start hidden
@@ -41,6 +43,8 @@ public class UIController : MonoBehaviour
 
         if (quitButton != null)
             quitButton.onClick.AddListener(OnQuitClicked);
+        if (quitLossButton != null)
+            quitLossButton.onClick.AddListener(OnQuitClicked);
     }
 
     #region Public API called from GameManager
