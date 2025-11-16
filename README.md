@@ -168,9 +168,6 @@ Perfect foundation for casual puzzle game expansion.
 
 ---
 
-## 📜 License  
-For assessment and showcase purposes only.  
-Not intended for commercial release without asset rights.
 
 ---
 
