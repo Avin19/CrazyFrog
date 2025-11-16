@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -118,7 +119,9 @@ public class GameManager : MonoBehaviour
     public void RestartLevel()
     {
         boardManager.ClearBoard();
+        boardManager.ClearBoard();
         LoadLevel(CurrentLevelIndex);
+
     }
 
     public void LoadNextLevel()
@@ -127,25 +130,7 @@ public class GameManager : MonoBehaviour
         boardManager.ClearBoard();
         LoadLevel(next);
     }
-    private void CheckChainReactionFinished()
-    {
-        if (!waitingForChainReaction) return;
 
-        // Wait is over
-        waitingForChainReaction = false;
-
-        // If no poppers left -> WIN
-        if (boardManager.AllPoppersCleared())
-        {
-            OnBoardCleared();
-            return;
-        }
-
-        // If player has 0 taps and board not cleared -> LOSE
-        if (RemainingTaps == 0)
-            waitingForChainReaction = true;
-
-    }
     public void StartChainReaction()
     {
         waitingForChainReaction = true;

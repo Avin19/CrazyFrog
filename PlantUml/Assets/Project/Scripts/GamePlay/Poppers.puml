@@ -1,0 +1,20 @@
+@startuml
+class Poppers {
+    - gridX : int
+    - gridY : int
+    - hitsRemaining : int
+    - isExploded : bool = false
+    + Initialize(board:BoardManager, x:int, y:int, color:PopperColor) : void
+    - Awake() : void
+    - OnMouseDown() : void
+    + HitByProjectile() : void
+    - Hit() : void
+    - Explode() : void
+}
+MonoBehaviour <|-- Poppers
+Poppers --> "view" PopperView
+Poppers --> "projectilePrefab" Projectile
+Poppers --> "board" BoardManager
+Poppers --> "color" PopperColor
+Poppers --> "col" Collider2D
+@enduml
