@@ -1,0 +1,15 @@
+@startuml
+enum PopperColor {
+    None= 0,
+    Purple= 1,
+    Blue= 2,
+    Yellow= 3,
+}
+class LevelDefinition {
+    + levelIndex : int
+    + width : int
+    + height : int
+    + maxTaps : int
+}
+ScriptableObject <|-- LevelDefinition
+@enduml

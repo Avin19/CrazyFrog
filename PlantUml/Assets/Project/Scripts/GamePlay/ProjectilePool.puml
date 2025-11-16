@@ -1,0 +1,15 @@
+@startuml
+class ProjectilePool {
+    - initialSize : int = 20
+    - Awake() : void
+    - CreateNewProjectile() : Projectile
+    + SpawnProjectile(position:Vector3, direction:Vector2) : Projectile
+    + ReleaseProjectile(proj:Projectile) : void
+}
+class "Queue`1"<T> {
+}
+MonoBehaviour <|-- ProjectilePool
+ProjectilePool --> "Instance" ProjectilePool
+ProjectilePool --> "projectilePrefab" Projectile
+ProjectilePool o-> "pool<Projectile>" "Queue`1"
+@enduml

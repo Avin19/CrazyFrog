@@ -42,7 +42,7 @@ Each tapped popper triggers state changes or explosions that launch projectiles 
 | Open settings | Menu/Settings button |
 
 ---
-
+![Diagram](Assets/Project/Art/include.png)
 ## 📁 Project Structure
 
 Assets/

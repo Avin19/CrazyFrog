@@ -1,0 +1,11 @@
+@startuml
+class Projectile {
+    - speed : float = 5f
+    + Initialize(dir:Vector2) : void
+    - Update() : void
+    - OnTriggerEnter2D(other:Collider2D) : void
+    - Release() : void
+}
+MonoBehaviour <|-- Projectile
+Projectile --> "direction" Vector2
+@enduml

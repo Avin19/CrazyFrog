@@ -1,0 +1,24 @@
+@startuml
+class UIController {
+    - Awake() : void
+    + UpdateTapCount(taps:int) : void
+    + UpdateLevelLabel(levelNumber:int) : void
+    + ShowWinPanel() : void
+    + ShowLosePanel() : void
+    - OnNextLevelClicked() : void
+    - OnRestartClicked() : void
+    - OnQuitClicked() : void
+}
+MonoBehaviour <|-- UIController
+UIController --> "tapCountText" TextMeshProUGUI
+UIController --> "levelLabelText" TextMeshProUGUI
+UIController --> "messageText" TextMeshProUGUI
+UIController --> "winPanel" GameObject
+UIController --> "losePanel" GameObject
+UIController --> "hudPanel" GameObject
+UIController --> "nextLevelButton" Button
+UIController --> "restartButtonOnWin" Button
+UIController --> "restartButtonOnLose" Button
+UIController --> "quitButton" Button
+UIController --> "quitLossButton" Button
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+class BoardManager {
+    - cellSize : float = 1.0f
+    - width : int
+    - height : int
+    - aliveCount : int
+    + BuildBoard(level:LevelDefinition) : void
+    + ClearBoard() : void
+    + NotifyPopperExploded(popper:Poppers) : void
+    + AllPoppersCleared() : bool
+    + GetPopperAt(x:int, y:int) : Poppers
+    + SpawnExplosionProjectiles(gridX:int, gridY:int, origin:Transform) : void
+}
+MonoBehaviour <|-- BoardManager
+BoardManager --> "popperPrefab" Poppers
+BoardManager o-> "boardOrigin" Vector2
+@enduml

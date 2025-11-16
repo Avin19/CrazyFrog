@@ -1,0 +1,28 @@
+@startuml
+class GameManager {
+    - activeProjectiles : int = 0
+    - waitingForChainReaction : bool = false
+    - loseCheckRunning : bool = false
+    + CurrentLevelIndex : int <<get>> = 0
+    + RemainingTaps : int <<get>>
+    - levelFinished : bool
+    - Awake() : void
+    + RegisterProjectile() : void
+    + UnregisterProjectile() : void
+    - Start() : void
+    + LoadLevel(index:int) : void
+    + TryUseTap() : bool
+    - CheckLoseAfterDelay() : IEnumerator
+    + OnBoardCleared() : void
+    + OnNoMovesLeft() : void
+    + RestartLevel() : void
+    + LoadNextLevel() : void
+    + StartChainReaction() : void
+    - CheckEndOfChain() : IEnumerator
+}
+MonoBehaviour <|-- GameManager
+GameManager --> "Instance" GameManager
+GameManager --> "boardManager" BoardManager
+GameManager --> "uiController" UIController
+GameManager --> "currentLevel" LevelDefinition
+@enduml

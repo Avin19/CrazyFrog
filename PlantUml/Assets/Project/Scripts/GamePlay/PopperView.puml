@@ -1,0 +1,23 @@
+@startuml
+class PopperView {
+    - explosionDuration : float = 0.25f
+    - Awake() : void
+    - CreateEyes() : void
+    + SetColor(color:PopperColor) : void
+    + PlayExplosionPuff(onComplete:System.Action) : void
+    - ExplosionRoutine(onComplete:System.Action) : System.Collections.IEnumerator
+}
+MonoBehaviour <|-- PopperView
+PopperView --> "bodyRenderer" SpriteRenderer
+PopperView --> "purpleSprite" Sprite
+PopperView --> "blueSprite" Sprite
+PopperView --> "yellowSprite" Sprite
+PopperView --> "leftEyeSprite" Sprite
+PopperView --> "rightEyeSprite" Sprite
+PopperView --> "leftEyeLocalPos" Vector2
+PopperView --> "rightEyeLocalPos" Vector2
+PopperView --> "explosionRenderer" SpriteRenderer
+PopperView --> "explosionSprite" Sprite
+PopperView --> "leftEyeGO" GameObject
+PopperView --> "rightEyeGO" GameObject
+@enduml

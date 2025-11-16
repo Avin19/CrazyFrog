@@ -1,0 +1,17 @@
+@startuml
+class AudioManager {
+    - Awake() : void
+    + PlayBackgroundMusic() : void
+    + PlayPop() : void
+    + PlayLevelComplete() : void
+    + PlayLevelFailed() : void
+}
+MonoBehaviour <|-- AudioManager
+AudioManager --> "Instance" AudioManager
+AudioManager --> "musicSource" AudioSource
+AudioManager --> "sfxSource" AudioSource
+AudioManager --> "backgroundMusic" AudioClip
+AudioManager --> "popClip" AudioClip
+AudioManager --> "winClip" AudioClip
+AudioManager --> "loseClip" AudioClip
+@enduml
