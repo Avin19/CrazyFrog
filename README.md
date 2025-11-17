@@ -5,7 +5,7 @@
 
 ## 📌 Overview  
 **Crazy Poppers** is a chain-reaction based puzzle game inspired by *Crazy Popper* mechanics.  
-Your goal is to clear the board by smartly using a limited number of taps.  
+The goal is to clear the board by smartly using a limited number of taps.  
 Each tapped popper triggers state changes or explosions that launch projectiles in four directions, creating satisfying chain reactions.  
 
 ---
