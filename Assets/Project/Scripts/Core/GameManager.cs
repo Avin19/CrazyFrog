@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelDefinition[] levels;
     [SerializeField] private BoardManager boardManager;
     [SerializeField] private UIController uiController;
+    [SerializeField] private LevelPlaySample adManager;
+
     private int activeProjectiles = 0;
     private bool waitingForChainReaction = false;
     private bool loseCheckRunning = false;
@@ -51,6 +53,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         LoadLevel(CurrentLevelIndex);
+        adManager.LoadBanner();
+
     }
 
     public void LoadLevel(int index)
@@ -121,6 +125,7 @@ public class GameManager : MonoBehaviour
         boardManager.ClearBoard();
         boardManager.ClearBoard();
         LoadLevel(CurrentLevelIndex);
+        adManager.LoadReward();
 
     }
 
@@ -129,6 +134,7 @@ public class GameManager : MonoBehaviour
         int next = (CurrentLevelIndex + 1) % levels.Length;
         boardManager.ClearBoard();
         LoadLevel(next);
+        adManager.LoadInterstitial();
     }
 
     public void StartChainReaction()
